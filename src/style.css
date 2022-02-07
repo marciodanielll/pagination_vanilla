@@ -1,0 +1,49 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+#header{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: black;
+  color: antiquewhite;
+  width: 100%;
+  height: 100px;
+}
+
+#header h1{
+  text-align: center;
+}
+
+
+#ul_characters {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: auto;
+}
+
+.card {
+  list-style-type: none;
+  text-align: center;
+  border: solid black 2px;
+  background-color:antiquewhite;
+}
+
+.card img {
+  padding: 10px;
+}
+
+#pagination  {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+#pagination button, nav {
+  font-size: 28px;
+}
