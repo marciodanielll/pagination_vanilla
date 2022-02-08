@@ -1,8 +1,10 @@
+/* eslint-disable max-lines-per-function */
 const INITIAL_END_POINT = 'https://rickandmortyapi.com/api/character/?page=1';
+const BASE_URL = 'https://rickandmortyapi.com/api/character/?page';
 
 const getCharacters = async (endPoint = INITIAL_END_POINT) => {
   try {
-    console.log('endPoint chamada', endPoint);
+    /* console.log('endPoint chamada', endPoint); */
     const response = await fetch(endPoint);
     const result = await response.json();
     return result;
@@ -18,12 +20,11 @@ const handlerDataPaginationLS = {
 };
 
 const getCurrentEndPoint = () => {
-  const baseUrl = 'https://rickandmortyapi.com/api/character/?page';
   const { next, prev } = handlerDataPaginationLS.get();
   if (next) {
-    return `${baseUrl}=${Number(next.split('=')[1]) - 1}`;
+    return `${BASE_URL}=${Number(next.split('=')[1]) - 1}`;
   }
-  return `${baseUrl}=${Number(prev.split('=')[1]) + 1}`;
+  return `${BASE_URL}=${Number(prev.split('=')[1]) + 1}`;
 };
 
 const createCard = ({ name, image, gender, status, species }) => {
@@ -55,6 +56,7 @@ const createCard = ({ name, image, gender, status, species }) => {
 
 const createListCards = (characters) => {
   const list = document.querySelector('#ul_characters');
+  console.log(list);
   list.innerHTML = '';
 
   characters.forEach((current) => {
@@ -106,6 +108,13 @@ const createPagination = () => {
       button.style.backgroundColor = 'black';
       button.style.color = 'white';
     }
+    button.addEventListener('click', async () => {
+      const { info, results: characters } = await getCharacters(`${BASE_URL}=${numberPage}`);
+      handlerDataPaginationLS.set(info);
+      createListCards(characters);
+      createPagination();
+      handlerLimitNextPrev();
+    });
     pagination.appendChild(button);
   });
 };
